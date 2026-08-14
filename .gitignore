@@ -1,2 +1,32 @@
-#Project Information
+# Project Information & Private Resources
 project_info.md
+/resources
+
+# IDE and Editor
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+
+# Maven & Build Outputs
+target/
+**/target/
+*.jar
+*.war
+*.ear
+*.class
+
+# Node / Frontend
+node_modules/
+dist/
+.env.local
+.env.*.local
+
+# Operating System & Logs
+.DS_Store
+Thumbs.db
+*.log
