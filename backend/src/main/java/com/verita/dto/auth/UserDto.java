@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserDto {
     private String id;
+    private String firebaseUid;
     private String email;
     private String fullName;
     private Role role;

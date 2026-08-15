@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { auth } from '../config/firebase';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -9,12 +10,27 @@ const client = axios.create({
   },
 });
 
-// Request interceptor to attach JWT Bearer token
+// Request interceptor to attach Firebase ID Bearer token
 client.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('veriresume_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+  async (config) => {
+    try {
+      let token = null;
+      if (auth?.currentUser) {
+        token = await auth.currentUser.getIdToken();
+        localStorage.setItem('veriresume_token', token);
+      } else {
+        token = localStorage.getItem('veriresume_token');
+      }
+
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (err) {
+      console.warn('Could not retrieve Firebase ID token for request:', err);
+      const cachedToken = localStorage.getItem('veriresume_token');
+      if (cachedToken) {
+        config.headers.Authorization = `Bearer ${cachedToken}`;
+      }
     }
     return config;
   },

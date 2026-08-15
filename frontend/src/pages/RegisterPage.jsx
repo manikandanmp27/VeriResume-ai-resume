@@ -2,12 +2,30 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { User, Mail, Lock, ArrowRight, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
+import { User, Mail, Lock, ArrowRight, Loader2, Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
+
+const mapRegisterError = (err) => {
+  const code = err.code || '';
+  if (code.includes('email-already-in-use')) {
+    return 'This email is already registered. Please sign in instead.';
+  }
+  if (code.includes('invalid-email')) {
+    return 'Please enter a valid email address.';
+  }
+  if (code.includes('weak-password')) {
+    return 'Password is too weak. Please use at least 6 characters.';
+  }
+  if (code.includes('network-request-failed')) {
+    return 'Network connection failed. Please check your internet connection.';
+  }
+  return err.response?.data?.message || err.message || 'Registration failed. Please try again.';
+};
 
 const RegisterPage = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const { error, success } = useToast();
@@ -15,8 +33,14 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!fullName || !email || !password) {
+    if (!fullName.trim() || !email.trim() || !password) {
       error('Please complete all required fields');
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      error('Please enter a valid email address');
       return;
     }
 
@@ -25,14 +49,19 @@ const RegisterPage = () => {
       return;
     }
 
+    if (password !== confirmPassword) {
+      error('Passwords do not match. Please re-enter your password.');
+      return;
+    }
+
     try {
       setLoading(true);
-      await register(fullName, email, password);
+      await register(fullName.trim(), email.trim(), password);
       success('Account created successfully! Welcome to VeriResume.');
       navigate('/dashboard');
     } catch (err) {
       console.error('Registration error:', err);
-      error(err.response?.data?.message || 'Registration failed. Please try again.');
+      error(mapRegisterError(err));
     } finally {
       setLoading(false);
     }
@@ -46,7 +75,7 @@ const RegisterPage = () => {
             <Sparkles className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-white font-display">Create Your Account</h1>
-          <p className="text-xs text-slate-400">Start generating fact-grounded, ATS-ready resumes</p>
+          <p className="text-xs text-slate-400">Start generating fact-grounded, ATS-ready resumes with Firebase Auth</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -96,9 +125,25 @@ const RegisterPage = () => {
             </div>
           </div>
 
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Confirm Password *</label>
+            <div className="relative">
+              <CheckCircle2 className="w-4 h-4 text-slate-500 absolute left-3.5 top-3" />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter your password"
+                required
+                minLength={6}
+                className="input-field !pl-10"
+              />
+            </div>
+          </div>
+
           <div className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 text-[11px] text-slate-400 flex items-start gap-2">
             <ShieldCheck className="w-4 h-4 text-brand-400 flex-shrink-0 mt-0.5" />
-            <span>Your credentials and resume data are stored securely and never shared with third parties.</span>
+            <span>Passwords are secured by Firebase Authentication and never stored in plain text or in our database.</span>
           </div>
 
           <button

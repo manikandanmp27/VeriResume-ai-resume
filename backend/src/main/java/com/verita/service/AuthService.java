@@ -110,6 +110,7 @@ public class AuthService {
 
         return UserDto.builder()
                 .id(user.getId())
+                .firebaseUid(user.getFirebaseUid())
                 .email(user.getEmail())
                 .fullName(user.getFullName())
                 .role(user.getRole())

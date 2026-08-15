@@ -2,7 +2,24 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { Lock, Mail, ArrowRight, Loader2, Sparkles, UserCheck } from 'lucide-react';
+import { Lock, Mail, ArrowRight, Loader2, UserCheck } from 'lucide-react';
+
+const mapAuthError = (err) => {
+  const code = err.code || '';
+  if (code.includes('invalid-credential') || code.includes('wrong-password') || code.includes('user-not-found')) {
+    return 'Invalid email or password. Please check your credentials.';
+  }
+  if (code.includes('invalid-email')) {
+    return 'Please enter a valid email address.';
+  }
+  if (code.includes('too-many-requests')) {
+    return 'Too many failed login attempts. Please try again later.';
+  }
+  if (code.includes('network-request-failed')) {
+    return 'Network error. Please check your internet connection.';
+  }
+  return err.response?.data?.message || err.message || 'Authentication failed. Please try again.';
+};
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -30,7 +47,7 @@ const LoginPage = () => {
       navigate(redirectPath);
     } catch (err) {
       console.error('Login error:', err);
-      error(err.response?.data?.message || 'Invalid email or password');
+      error(mapAuthError(err));
     } finally {
       setLoading(false);
     }

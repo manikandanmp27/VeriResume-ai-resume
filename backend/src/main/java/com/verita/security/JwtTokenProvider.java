@@ -65,6 +65,26 @@ public class JwtTokenProvider {
         return claims.getSubject();
     }
 
+    public String getEmailFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return (String) claims.get("email");
+    }
+
+    public String getFullNameFromToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        return (String) claims.get("name");
+    }
+
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
