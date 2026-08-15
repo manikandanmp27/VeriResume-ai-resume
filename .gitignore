@@ -20,12 +20,15 @@ target/
 *.ear
 *.class
 
+# Environment & Secrets
+.env
+.env.*
+!.env.example
+*.env
+
 # Node / Frontend
 node_modules/
 dist/
-.env
-.env.local
-.env.*.local
 
 # Operating System & Logs
 .DS_Store
