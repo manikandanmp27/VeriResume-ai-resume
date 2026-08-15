@@ -49,7 +49,7 @@ const LoginPage = () => {
             <Lock className="w-6 h-6" />
           </div>
           <h1 className="text-2xl font-extrabold text-white font-display">Welcome Back</h1>
-          <p className="text-xs text-slate-400">Sign in to your Verita account to manage your resumes</p>
+          <p className="text-xs text-slate-400">Sign in to your VeriResume account to manage your resumes</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">

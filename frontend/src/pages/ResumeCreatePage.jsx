@@ -70,7 +70,7 @@ const ResumeCreatePage = () => {
           Create a Grounded Resume
         </h1>
         <p className="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto">
-          Start with your natural career information. Verita will ground your accomplishments and test ATS compatibility.
+          Start with your natural career information. VeriResume will ground your accomplishments and test ATS compatibility.
         </p>
       </div>
 

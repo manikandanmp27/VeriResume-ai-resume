@@ -15,7 +15,7 @@ const PublicLayout = () => {
             V
           </div>
           <div>
-            <span className="text-xl font-extrabold tracking-tight text-white font-display">Verita</span>
+            <span className="text-xl font-extrabold tracking-tight text-white font-display">VeriResume</span>
             <span className="ml-2 text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">
               AI Resume
             </span>
@@ -51,10 +51,10 @@ const PublicLayout = () => {
       <footer className="border-t border-slate-800/80 bg-slate-950/90 py-8 px-4 md:px-8 text-center text-xs text-slate-500">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-300 font-display">Verita</span>
+            <span className="font-bold text-slate-300 font-display">VeriResume</span>
             <span>— Grounded AI Resume Assistant with Fact Lock & ATS Reality Check.</span>
           </div>
-          <p>© {new Date().getFullYear()} Verita AI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} VeriResume AI. All rights reserved.</p>
         </div>
       </footer>
     </div>

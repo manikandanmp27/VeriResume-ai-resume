@@ -120,7 +120,7 @@ const ProfilePage = () => {
         <div className="flex items-center gap-3 p-4 rounded-2xl bg-brand-950/20 border border-brand-500/20 text-slate-300 text-xs">
           <ShieldCheck className="w-5 h-5 text-brand-400 flex-shrink-0" />
           <span>
-            This information serves as your baseline source of truth across all resumes created in Verita.
+            This information serves as your baseline source of truth across all resumes created in VeriResume.
           </span>
         </div>
 

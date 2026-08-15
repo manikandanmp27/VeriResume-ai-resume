@@ -28,7 +28,7 @@ const RegisterPage = () => {
     try {
       setLoading(true);
       await register(fullName, email, password);
-      success('Account created successfully! Welcome to Verita.');
+      success('Account created successfully! Welcome to VeriResume.');
       navigate('/dashboard');
     } catch (err) {
       console.error('Registration error:', err);

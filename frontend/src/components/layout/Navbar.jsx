@@ -38,7 +38,7 @@ const Navbar = ({ onToggleSidebar }) => {
             V
           </div>
           <div>
-            <span className="text-lg font-extrabold tracking-tight text-white font-display">Verita</span>
+            <span className="text-lg font-extrabold tracking-tight text-white font-display">VeriResume</span>
             <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20">
               AI Resume
             </span>

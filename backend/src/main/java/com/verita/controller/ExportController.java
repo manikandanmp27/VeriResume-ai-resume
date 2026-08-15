@@ -30,7 +30,7 @@ public class ExportController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_PDF);
-        headers.setContentDispositionFormData("attachment", "verita_resume.pdf");
+        headers.setContentDispositionFormData("attachment", "veriresume_resume.pdf");
         headers.setContentLength(pdfBytes.length);
 
         return ResponseEntity.ok()

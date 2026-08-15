@@ -18,10 +18,10 @@ public class OpenApiConfig {
         final String securitySchemeName = "bearerAuth";
         return new OpenAPI()
                 .info(new Info()
-                        .title("Verita — AI Resume Generator API")
+                        .title("VeriResume — AI Resume Generator API")
                         .version("1.0.0")
-                        .description("REST API documentation for Verita: anti-hallucination resume generator with Fact Lock, ATS Reality Check, and Job Tailoring.")
-                        .contact(new Contact().name("Verita Team").email("support@verita.ai"))
+                        .description("REST API documentation for VeriResume: anti-hallucination resume generator with Fact Lock, ATS Reality Check, and Job Tailoring.")
+                        .contact(new Contact().name("VeriResume Team").email("support@veriresume.ai"))
                         .license(new License().name("Apache 2.0").url("https://springdoc.org")))
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName))
                 .components(new Components()

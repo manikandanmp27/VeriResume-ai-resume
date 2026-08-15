@@ -89,7 +89,7 @@ const SectionProjects = ({ data = [], onChange, onImprove }) => {
                 type="text"
                 value={proj.title || ''}
                 onChange={(e) => updateProject(idx, 'title', e.target.value)}
-                placeholder="e.g. Verita AI Resume Generator"
+                placeholder="e.g. VeriResume AI Resume Generator"
                 className="input-field !text-xs !py-1.5"
               />
             </div>

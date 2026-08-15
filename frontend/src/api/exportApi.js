@@ -8,7 +8,7 @@ export const exportApi = {
     return res.data;
   },
 
-  downloadPdfBlob: (blob, filename = 'verita_resume.pdf') => {
+  downloadPdfBlob: (blob, filename = 'veriresume_resume.pdf') => {
     const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
     const link = document.createElement('a');
     link.href = url;

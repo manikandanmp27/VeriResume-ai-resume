@@ -5,24 +5,24 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem('verita_user');
+    const savedUser = localStorage.getItem('veriresume_user');
     try {
       return savedUser ? JSON.parse(savedUser) : null;
     } catch {
       return null;
     }
   });
-  const [token, setToken] = useState(() => localStorage.getItem('verita_token'));
+  const [token, setToken] = useState(() => localStorage.getItem('veriresume_token'));
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const initializeAuth = async () => {
-      const storedToken = localStorage.getItem('verita_token');
+      const storedToken = localStorage.getItem('veriresume_token');
       if (storedToken) {
         try {
           const currentUser = await authApi.getCurrentUser();
           setUser(currentUser);
-          localStorage.setItem('verita_user', JSON.stringify(currentUser));
+          localStorage.setItem('veriresume_user', JSON.stringify(currentUser));
         } catch (err) {
           console.error('Session validation failed:', err);
           logout();
@@ -37,8 +37,8 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const res = await authApi.login({ email, password });
     const { token: jwtToken, user: userData } = res;
-    localStorage.setItem('verita_token', jwtToken);
-    localStorage.setItem('verita_user', JSON.stringify(userData));
+    localStorage.setItem('veriresume_token', jwtToken);
+    localStorage.setItem('veriresume_user', JSON.stringify(userData));
     setToken(jwtToken);
     setUser(userData);
     return res;
@@ -47,16 +47,16 @@ export const AuthProvider = ({ children }) => {
   const register = async (fullName, email, password) => {
     const res = await authApi.register({ fullName, email, password });
     const { token: jwtToken, user: userData } = res;
-    localStorage.setItem('verita_token', jwtToken);
-    localStorage.setItem('verita_user', JSON.stringify(userData));
+    localStorage.setItem('veriresume_token', jwtToken);
+    localStorage.setItem('veriresume_user', JSON.stringify(userData));
     setToken(jwtToken);
     setUser(userData);
     return res;
   };
 
   const logout = () => {
-    localStorage.removeItem('verita_token');
-    localStorage.removeItem('verita_user');
+    localStorage.removeItem('veriresume_token');
+    localStorage.removeItem('veriresume_user');
     setToken(null);
     setUser(null);
   };
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const updatedUser = await authApi.getCurrentUser();
       setUser(updatedUser);
-      localStorage.setItem('verita_user', JSON.stringify(updatedUser));
+      localStorage.setItem('veriresume_user', JSON.stringify(updatedUser));
       return updatedUser;
     } catch (err) {
       console.error('Failed to refresh user:', err);

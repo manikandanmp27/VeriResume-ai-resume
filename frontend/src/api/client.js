@@ -12,7 +12,7 @@ const client = axios.create({
 // Request interceptor to attach JWT Bearer token
 client.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('verita_token');
+    const token = localStorage.getItem('veriresume_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -30,8 +30,8 @@ client.interceptors.response.use(
       if (error.response.status === 401) {
         const isAuthEndpoint = error.config.url?.includes('/auth/login') || error.config.url?.includes('/auth/register');
         if (!isAuthEndpoint) {
-          localStorage.removeItem('verita_token');
-          localStorage.removeItem('verita_user');
+          localStorage.removeItem('veriresume_token');
+          localStorage.removeItem('veriresume_user');
           if (window.location.pathname !== '/login' && window.location.pathname !== '/register' && window.location.pathname !== '/') {
             window.location.href = '/login?session_expired=true';
           }

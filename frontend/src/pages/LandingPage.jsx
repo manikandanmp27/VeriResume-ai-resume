@@ -30,7 +30,7 @@ const LandingPage = () => {
         </h1>
 
         <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          Verita uses generative AI to craft high-impact resumes while guaranteeing your content is traceable back to your actual experience through <strong className="text-white">Fact Lock</strong> and verified with an <strong className="text-white">ATS Reality Check</strong>.
+          VeriResume uses generative AI to craft high-impact resumes while guaranteeing your content is traceable back to your actual experience through <strong className="text-white">Fact Lock</strong> and verified with an <strong className="text-white">ATS Reality Check</strong>.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -64,7 +64,7 @@ const LandingPage = () => {
             Core Feature 1: Fact Lock
           </h2>
           <p className="text-sm text-slate-300 leading-relaxed mb-6">
-            Traditional AI resume tools invent fake metrics (like "boosted revenue by 80%") and unsupported technologies. Verita maps every generated bullet point directly to your verified source facts.
+            Traditional AI resume tools invent fake metrics (like "boosted revenue by 80%") and unsupported technologies. VeriResume maps every generated bullet point directly to your verified source facts.
           </p>
 
           <div className="space-y-3 bg-slate-950/80 p-4 rounded-xl border border-slate-800 text-xs">
@@ -140,7 +140,7 @@ const LandingPage = () => {
             </div>
             <h3 className="text-base font-bold text-slate-100">Job Description Tailoring</h3>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Paste a target job posting. Verita emphasizes relevant grounded achievements and creates a new version without destroying your original.
+              Paste a target job posting. VeriResume emphasizes relevant grounded achievements and creates a new version without destroying your original.
             </p>
           </div>
 
@@ -192,7 +192,7 @@ const LandingPage = () => {
           Ready to create an ATS-friendly, grounded resume?
         </h2>
         <p className="text-sm text-slate-300 max-w-xl mx-auto">
-          Join Verita today and build resumes with confidence, fact verification, and ATS compatibility.
+          Join VeriResume today and build resumes with confidence, fact verification, and ATS compatibility.
         </p>
         <Link to="/register" className="btn-primary !px-8 !py-3 !text-base shadow-glow-primary inline-flex">
           Get Started for Free

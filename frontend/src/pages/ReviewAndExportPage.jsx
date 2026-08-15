@@ -64,7 +64,7 @@ const ReviewAndExportPage = () => {
         template: selectedTemplate,
       });
 
-      const cleanFilename = `${(resumeData?.title || 'verita_resume')
+      const cleanFilename = `${(resumeData?.title || 'veriresume_resume')
         .toLowerCase()
         .replace(/[^a-z0-9]/g, '_')}.pdf`;
 

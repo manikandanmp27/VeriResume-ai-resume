@@ -129,7 +129,7 @@ const Sidebar = ({ isOpen, onClose, activeResumeId }) => {
 
         {/* Footer info */}
         <div className="p-4 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
-          <span>Verita AI v1.0</span>
+          <span>VeriResume AI v1.0</span>
           <span className="flex items-center gap-1 text-emerald-400">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             Connected
