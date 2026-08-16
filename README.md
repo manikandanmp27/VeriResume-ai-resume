@@ -1,12 +1,12 @@
 # VeriResume — Grounded AI Resume Assistant
 
-> **AI-powered resume assistant with Fact Lock anti-hallucination verification, job tailoring, and ATS Reality Check parsing simulation.**
+> **AI-powered resume assistant with Fact Lock anti-hallucination verification, job tailoring, ATS Reality Check parsing simulation, and secure Firebase Authentication.**
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0-purple.svg)](https://vitejs.dev/)
-[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8.svg)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Auth-Firebase-FFA611.svg)](https://firebase.google.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791.svg)](https://www.postgresql.org/)
 [![Gemini](https://img.shields.io/badge/AI-Google%20Gemini-4285F4.svg)](https://ai.google.dev/)
 
@@ -14,7 +14,7 @@
 
 ## 🌟 Overview
 
-Most AI resume tools invent ungrounded accomplishments, fabricate metrics (e.g., *"increased revenue by 80%"*), or introduce complex formatting tables that break Applicant Tracking Systems (ATS).
+Most AI resume tools invent ungrounded accomplishments, fabricate metrics (e.g., *"increased revenue by 80%"*), or introduce complex multi-column formatting tables that break Applicant Tracking Systems (ATS).
 
 **VeriResume** solves this with two foundational pillars:
 1. **🛡️ Fact Lock Anti-Hallucination Engine:** Maps every generated bullet point directly to user-supplied source facts. Unverified claims are prominently flagged for review and excluded from the final export until approved.
@@ -22,42 +22,19 @@ Most AI resume tools invent ungrounded accomplishments, fabricate metrics (e.g.,
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ Production Architecture
 
-```mermaid
-graph TD
-    User([User / Browser])
-    
-    subgraph Frontend [React 18 + Vite + Tailwind CSS]
-        UI[Editor & Live Preview]
-        FactLockUI[Fact Lock Verification Hub]
-        ATSView[ATS Simulation Stream]
-        DiffView[Version Diff Viewer]
-    end
-    
-    subgraph Backend [Spring Boot 3.3.5 REST API]
-        AuthController[Auth & JWT Security]
-        ResumeController[Resume & Section Service]
-        FactLockEngine[Fact Lock Engine]
-        ATSSimulator[ATS Parser Simulator]
-        TailorEngine[Job Tailoring & Diff Engine]
-        PDFService[PDF Export Engine]
-    end
-    
-    subgraph External [External Services & Database]
-        DB[(PostgreSQL)]
-        Gemini[Google Gemini API]
-    end
-    
-    User <--> UI
-    UI <--> Backend
-    FactLockUI <--> FactLockEngine
-    ATSView <--> ATSSimulator
-    DiffView <--> TailorEngine
-    
-    Backend <--> DB
-    Backend <--> Gemini
-    PDFService --> Output[Verified ATS-Friendly PDF]
+```text
+GitHub Repository
+   │
+   ├──→ Vercel (React 18 + Vite Frontend)
+   │      └── Public SPA with Client-side Routing
+   │
+   └──→ Render (Spring Boot 3.3.5 Backend API)
+          │
+          ├── PostgreSQL (Managed Database)
+          ├── Google Gemini 1.5 API (Grounded Generation)
+          └── Firebase Admin SDK (Server-Side ID Token Verification)
 ```
 
 ---
@@ -70,125 +47,102 @@ graph TD
 * **Job Description Tailoring & Diff:** Analyzes target JDs, computes match indicators, and non-destructively produces tailored version snapshots with side-by-side diffs.
 * **4 ATS-Optimized Templates:** Clean, single-column layouts designed for flawless machine parsing (`Modern`, `Classic`, `Minimal`, `Technical`).
 * **Pre-Flight Review & Verified PDF Export:** Comprehensive pre-export audit and 1-click server-side PDF generation.
+* **Secure Firebase Authentication:** Client SDK auth with server-side token verification; passwords are never stored in our database.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Backend
-* **Language/Runtime:** Java 21
+* **Language/Runtime:** Java 21 / Java 24
 * **Framework:** Spring Boot 3.3.5 (Spring Web, Spring Security, Spring Data JPA)
-* **Authentication:** Stateless JWT (HMAC-SHA512)
-* **Database:** PostgreSQL 16
-* **AI Integration:** Google Gemini REST API
+* **Authentication:** Firebase Admin SDK & Server-Side ID Token Verification
+* **Database:** PostgreSQL 16 (with in-memory H2 profile for instant local dev)
+* **AI Integration:** Google Gemini 1.5 Flash REST API
 * **PDF Rendering:** OpenHTMLToPDF / Flying Saucer & Thymeleaf
-* **Documentation:** SpringDoc OpenAPI 3 / Swagger UI
+* **Documentation:** SpringDoc OpenAPI 3 / Swagger UI (`/swagger-ui.html`)
+* **Health Monitoring:** `/api/health`
 
 ### Frontend
 * **Runtime/Bundler:** Node.js 18+ & Vite 6
 * **Framework:** React 18 & React Router 6
 * **Styling:** Vanilla Tailwind CSS with custom dark slate design tokens
 * **Icons:** Lucide React
-* **HTTP Client:** Axios with JWT request/response interceptors
+* **HTTP Client:** Axios with Firebase ID Token dynamic interceptors
 
 ---
 
-## 🏁 Quick Start Guide
+## ☁️ Production Deployment Guide
+
+### 1. Deploying the Backend on Render
+
+1. Create a free account at **[Render.com](https://render.com)**.
+2. Click **New +** $\rightarrow$ **Blueprint** (or use **Web Service**).
+3. Connect your GitHub repository: `https://github.com/manikandanmp27/VeriResume-ai-resume.git`.
+4. Render automatically reads [`render.yaml`](file:///e:/Github%20Repo/verita-ai-resume/render.yaml) to provision:
+   * A managed **PostgreSQL Database** (`veriresume-db`).
+   * A **Spring Boot Docker Web Service** (`veriresume-backend`).
+5. Set the required environment variables under **Environment**:
+   * `GEMINI_API_KEY`: Your Google Gemini API Key.
+   * `CORS_ALLOWED_ORIGINS`: `https://*.vercel.app,http://localhost:5173`
+   * `SPRING_PROFILES_ACTIVE`: `prod`
+6. Click **Deploy**. Your backend will be live at `https://<your-backend-app>.onrender.com`.
+7. Test the health check at: `https://<your-backend-app>.onrender.com/api/health`.
+
+---
+
+### 2. Deploying the Frontend on Vercel
+
+1. Create a free account at **[Vercel.com](https://vercel.com)**.
+2. Click **Add New...** $\rightarrow$ **Project** $\rightarrow$ Import your GitHub repository.
+3. In Project Settings:
+   * **Framework Preset:** `Vite`
+   * **Root Directory:** `frontend`
+   * **Build Command:** `npm run build`
+   * **Output Directory:** `dist`
+4. Under **Environment Variables**, add:
+   * `VITE_API_BASE_URL`: `https://<your-backend-app>.onrender.com/api`
+   * `VITE_FIREBASE_API_KEY`: `<Your Firebase Web API Key>`
+   * `VITE_FIREBASE_AUTH_DOMAIN`: `<your-project-id>.firebaseapp.com`
+   * `VITE_FIREBASE_PROJECT_ID`: `<your-project-id>`
+   * `VITE_FIREBASE_STORAGE_BUCKET`: `<your-project-id>.firebasestorage.app`
+   * `VITE_FIREBASE_MESSAGING_SENDER_ID`: `<your-sender-id>`
+   * `VITE_FIREBASE_APP_ID`: `<your-app-id>`
+5. Click **Deploy**.
+6. In **Firebase Console** $\rightarrow$ **Authentication** $\rightarrow$ **Settings** $\rightarrow$ **Authorized domains**, add your Vercel domain (`<your-app>.vercel.app`).
+
+---
+
+## 💻 Running Locally
 
 ### Prerequisites
-* **Java 21 JDK**
-* **Maven 3.9+** (or use backend Maven wrapper)
-* **Node.js 18+ & npm**
-* **Docker & Docker Compose** (for PostgreSQL)
+* **Java 21 or Java 24**
+* **Node.js 18+** & **npm**
 
----
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/manikandanmp27/verita-ai-resume.git
-cd verita-ai-resume
-```
-
----
-
-### 2. Start PostgreSQL Database
-```bash
+### Step 1: Start the Backend (Terminal 1)
+```powershell
 cd backend
-docker compose up -d
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-24"
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
 ```
-*PostgreSQL will be running on `localhost:5432` with database `verita_db`.*
+*API will start on `http://localhost:8080` with in-memory H2 database.*
 
----
-
-### 3. Configure Backend Environment
-Edit `backend/src/main/resources/application.properties` or set environment variables:
-```properties
-# Database
-spring.datasource.url=jdbc:postgresql://localhost:5432/verita_db
-spring.datasource.username=verita_user
-spring.datasource.password=verita_password
-
-# JWT Security
-jwt.secret=9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b7c6d5e4f3a2b1
-jwt.expiration=86400000
-
-# Google Gemini API
-gemini.api.key=YOUR_GEMINI_API_KEY_HERE
-```
-
-Run the backend:
-```bash
-cd backend
-mvn spring-boot:run
-```
-*Backend runs on `http://localhost:8080`.*
-*Swagger UI available at `http://localhost:8080/swagger-ui.html`.*
-
----
-
-### 4. Start the Frontend
-```bash
+### Step 2: Start the Frontend (Terminal 2)
+```powershell
 cd frontend
-npm install
 npm run dev
 ```
-*Frontend runs on `http://localhost:5173` with automatic `/api` proxying to `http://localhost:8080`.*
+*Frontend will start on `http://localhost:5173`.*
+
+### Step 3: Run with Docker Compose (Alternative)
+```bash
+docker compose up --build
+```
 
 ---
 
-## 📖 API Endpoints Summary
-
-| Module | Method | Endpoint | Description |
-| :--- | :--- | :--- | :--- |
-| **Auth** | `POST` | `/api/auth/register` | Register new user |
-| **Auth** | `POST` | `/api/auth/login` | Authenticate & receive JWT |
-| **Auth** | `GET` | `/api/auth/me` | Fetch current authenticated user |
-| **Profile** | `GET` / `PUT` | `/api/profile` | Get or update career profile |
-| **Resumes** | `GET` / `POST` | `/api/resumes` | List or create resumes |
-| **Resumes** | `GET` / `PUT` | `/api/resumes/{id}/content` | Get or update structured content |
-| **AI** | `POST` | `/api/resumes/{id}/generate` | Generate grounded bullets & Fact Lock claims |
-| **AI** | `POST` | `/api/resumes/{id}/improve` | Polish text bullet with rationale |
-| **Fact Lock** | `GET` | `/api/resumes/{id}/claims` | Get Fact Lock verification overview |
-| **Fact Lock** | `POST` | `/api/resumes/{id}/claims/{claimId}/verify` | Confirm and verify claim |
-| **Fact Lock** | `POST` | `/api/resumes/{id}/claims/{claimId}/reject` | Reject hallucinated claim |
-| **Job Tailor** | `POST` | `/api/jobs/analyze` | Analyze Job Description requirements |
-| **Job Tailor** | `POST` | `/api/resumes/{id}/tailor` | Generate tailored resume snapshot |
-| **ATS Check** | `POST` | `/api/resumes/{id}/ats-check` | Run simulated ATS parsing check |
-| **Export** | `POST` | `/api/resumes/{id}/export` | Download verified ATS-ready PDF |
-
----
-
-## 🔒 Fact Lock Grounding Matrix
-
-| Claim Status | Meaning | Included in PDF Export? |
-| :--- | :--- | :---: |
-| `VERIFIED` | Traceable directly to natural-language user facts | **Yes** |
-| `USER_CONFIRMED` | Approved manually by user after review | **Yes** |
-| `UNVERIFIED` | Metric or skill not found in initial input | **Flagged** |
-| `REJECTED` | Identified as hallucination / excluded | **No** |
-
----
-
-## 📜 License
-
-This project is licensed under the Apache License 2.0.
+## 🔒 Security Best Practices
+* **Zero Secrets in Git:** Sensitive `.env` files and credentials are in `.gitignore`.
+* **Server-Side Token Verification:** Firebase ID tokens are validated cryptographically by Spring Boot.
+* **No Database Passwords:** User authentication is offloaded to Firebase.
+* **Data Isolation:** All resume and claim database records enforce user ownership via `SecurityUtils.getCurrentUserId()`.

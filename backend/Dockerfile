@@ -9,6 +9,13 @@ RUN mvn clean package -DskipTests
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
+
+# Install font packages for Flying Saucer PDF rendering
+RUN apk add --no-cache fontconfig ttf-dejavu curl
+
 COPY --from=build /app/target/*.jar app.jar
+
+ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
