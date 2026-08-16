@@ -2,7 +2,7 @@
 
 > **AI-powered resume assistant with Fact Lock anti-hallucination verification, job tailoring, ATS Reality Check parsing simulation, and secure Firebase Authentication.**
 
-[![Frontend Live](https://img.shields.io/badge/Frontend-Live%20on%20Vercel-black.svg?logo=vercel)](https://veriresume-ai-resume.vercel.app)
+[![Frontend Live](https://img.shields.io/badge/Frontend-Live%20on%20Vercel-black.svg?logo=vercel)](https://veri-resume-ai-resume-xpok.vercel.app)
 [![Backend Live](https://img.shields.io/badge/Backend-Live%20on%20Render-46E3B7.svg?logo=render)](https://veriresume-backend-13iq.onrender.com)
 [![API Health](https://img.shields.io/badge/API%20Health-UP-brightgreen.svg)](https://veriresume-backend-13iq.onrender.com/api/health)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
@@ -19,7 +19,7 @@
 
 | Resource | Live Production URL |
 | :--- | :--- |
-| **🚀 Web Application (Frontend)** | **[https://veriresume-ai-resume.vercel.app](https://veriresume-ai-resume.vercel.app)** |
+| **🚀 Web Application (Frontend)** | **[https://veri-resume-ai-resume-xpok.vercel.app](https://veri-resume-ai-resume-xpok.vercel.app)** |
 | **⚡ REST API Service (Backend)** | **[https://veriresume-backend-13iq.onrender.com](https://veriresume-backend-13iq.onrender.com)** |
 | **🩺 Health Check Probe** | **[https://veriresume-backend-13iq.onrender.com/api/health](https://veriresume-backend-13iq.onrender.com/api/health)** |
 | **📖 Interactive Swagger UI Docs** | **[https://veriresume-backend-13iq.onrender.com/swagger-ui.html](https://veriresume-backend-13iq.onrender.com/swagger-ui.html)** |
@@ -42,7 +42,7 @@ Most AI resume tools invent ungrounded accomplishments, fabricate metrics (e.g.,
 GitHub Repository (main)
    │
    ├──→ Vercel (React 18 + Vite Frontend)
-   │      └── Public SPA with Client-side Routing (https://veriresume-ai-resume.vercel.app)
+   │      └── Public SPA with Client-side Routing (https://veri-resume-ai-resume-xpok.vercel.app)
    │
    └──→ Render (Spring Boot 3.3.5 Backend API)
           ├── URL: https://veriresume-backend-13iq.onrender.com
